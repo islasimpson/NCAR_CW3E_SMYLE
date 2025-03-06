@@ -6,12 +6,15 @@ from math import nan
 from smyleutils import colormap_utils as mycolors
 
 def plot_lev_time(fig, data, time, pre, ci, cmin, cmax, titlestr, x1=None, x2=None, y1=None, y2=None,
-    xlim=None, ylim=None, plevvar='ilev', contourlines=False, contourlinescale=1, xlabel='Time (days)'):
+    xlim=None, ylim=None, plevvar='ilev', contourlines=False, contourlinescale=1, xlabel='Time (days)',
+    signifdat=None, stipplesignif=False, ylabel=True):
     """ 
     Plot a pressure versus latitude time series in log-pressure coordinates
     """
 
     data = data.transpose(plevvar,"time")
+    if (signifdat is not None):
+        signifdat = signifdat.transpose(plevvar,"time")
 
     # set up contour levels and color map
     nlevs = (cmax-cmin)/ci + 1
@@ -30,9 +33,20 @@ def plot_lev_time(fig, data, time, pre, ci, cmin, cmax, titlestr, x1=None, x2=No
     ax.set_yticks([-np.log10(1000),-np.log10(300),-np.log10(100),-np.log10(30),
                   -np.log10(10),-np.log10(3),-np.log10(1)])
     ax.set_yticklabels(['1000','300','100','30','10','3','1'])
-    ax.set_ylabel('Pressure (hPa)')
+    if (ylabel):
+        ax.set_ylabel('Pressure (hPa)')
     ax.set_title(titlestr, fontsize=16)
     ax.set_xlabel(xlabel)
+
+    if (signifdat is not None):
+        if (stipplesignif):
+            density=4
+            ax.contourf(time, -1*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+                        hatches=[density*'.',density*'.',density*'.'])
+        else:
+            ax.contourf(time, -1*np.log10(pre), signifdat, levels=[0,0.5,1], colors='lightgray')
+
+
 
     if (contourlines):
         clevlines = clevs*contourlinescale

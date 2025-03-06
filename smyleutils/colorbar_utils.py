@@ -78,11 +78,11 @@ def plotcolorbar(fig, ci, cmin, cmax, titlestr, x1, x2, y1, y2,
         clevlines = clevs*contourlinescale
         clevlines = clevlines[np.abs(clevlines) > ci/2.]
         if (orient=='horizontal'):
-            ax.vlines(clevlines[clevlines > 0],-5,5, colors='black', linestyle='solid')
-            ax.vlines(clevlines[clevlines < 0],-5,5, colors='black', linestyle='dashed')
+            ax.vlines(clevlines[clevlines > 0]-ci/2.,-5,5, colors='black', linestyle='solid')
+            ax.vlines(clevlines[clevlines < 0]+ci/2.,-5,5, colors='black', linestyle='dashed')
         if (orient=='vertical'):
-            ax.hlines(clevlines[clevlines > 0],-10,15, colors='black', linestyle='solid')
-            ax.hlines(clevlines[clevlines < 0],-10,15, colors='black', linestyle='dashed')
+            ax.hlines(clevlines[clevlines > 0]-ci/2.,-10,15, colors='black', linestyle='solid')
+            ax.hlines(clevlines[clevlines < 0]+ci/2.,-10,15, colors='black', linestyle='dashed')
 
 
     return ax
