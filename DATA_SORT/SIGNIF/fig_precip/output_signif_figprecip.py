@@ -8,7 +8,7 @@ from smyleutils import averaging_utils as avg
 from smyleutils import qboplot_utils as qbo
 from smyleutils import colorbar_utils as cbars
 from smyleutils import bootstrap_utils as boot
-from CASutils import regrid_utils as regrid
+from smyleutils import regrid_utils as regrid
 
 basepath="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/PRECIP/"
 savdir="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig_precip/"
