@@ -76,3 +76,77 @@ def contourmap_bothoceans_tropics_fill_pos(fig, dat, lon, lat, ci, cmin, cmax, t
     return ax
 
 
+def contourmap_bothoceans_robinson_pos(fig, dat, lon, lat, ci, cmin, cmax, titlestr,
+ x1, x2, y1, y2, labels=True, cmap="blue2red", fontsize=15, signifdat=None, stipplesignif=False, contourlines=None, contourlinescale=1):
+    """ plot a contour map of 2D data dat with coordinates lon and lat
+        Input:
+              fig = the figure identifier
+              dat = the data to be plotted
+              lon = the longitude coordinate
+              lat = the latitude coordinate
+              ci = the contour interval
+              cmin = the minimum of the contour range
+              cmax = the maximum of the contour range
+              titlestr = the title of the map
+              x1 = position of the left edge
+              x2 = position of the right edge
+              y1 = position of the bottom edge
+              y2 = position of the top edge
+              labels = True/False (ticks and  labels are plotted if true) 
+              cmap = color map (only set up for blue2red at the moment)
+    """
+
+    # set up contour levels and color map
+    nlevs = (cmax-cmin)/ci + 1
+    clevs = np.arange(cmin, cmax+ci, ci)
+#    clevs[np.abs(clevs) < ci/2.] = 0
+#    print(clevs)
+
+    if (cmap == "blue2red"):
+        mymap = mycolors.blue2red_cmap(nlevs)
+
+    if (cmap == "precip"):
+        mymap = mycolors.precip_cmap(nlevs)
+
+    ax = fig.add_axes([x1, y1, x2-x1, y2-y1], projection=ccrs.Robinson(central_longitude=240))
+    ax.set_aspect('auto')
+    ax.add_feature(cfeature.COASTLINE, zorder=100)
+   # ax.set_extent([-180,180,0,90], crs = ccrs.PlateCarree())
+
+   # if (labels):
+        #ax.set_xticks([-180, -120, -60, 0,60,120, 180], crs = ccrs.PlateCarree())
+        #ax.set_xticklabels(['180W','120W','60W','0','60E','120E','180E'], fontsize=fontsize-3)
+        #ax.set_yticks([0,30,60,90], crs = ccrs.PlateCarree())
+        #ax.set_yticklabels(['0','30N','60N','90N'], fontsize=fontsize-3)
+        #ax.xformatter = LongitudeFormatter()
+        #ax.yformatter = LatitudeFormatter()
+
+    ax.set_title(titlestr, fontsize=fontsize)
+
+    dat, lon = add_cyclic_point(dat, coord=lon)
+    ax.contourf(lon, lat, dat, levels=clevs, cmap = mymap, extend="both", transform=ccrs.PlateCarree())
+
+    if ( signifdat is not None ):
+        lonsignif = signifdat.lon
+        signifdat, lonsignif = add_cyclic_point( signifdat, coord=lonsignif)
+        if (stipplesignif):
+            density=3
+            ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='none',
+               hatches=[density*'.',density*'.', density*','],
+               transform = ccrs.PlateCarree())
+        else:
+            ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='lightgray',
+               transform = ccrs.PlateCarree())
+
+    ax.set_global()
+
+    if (contourlines):
+        clevlines = clevs*contourlinescale
+        clevlines = clevlines[np.abs(clevlines) > ci]
+        ax.contour(lon, lat, dat, levels=clevlines, colors='black', transform=ccrs.PlateCarree())
+
+    return ax
+
+
+
+

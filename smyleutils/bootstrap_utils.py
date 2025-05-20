@@ -70,7 +70,7 @@ def bootgen(darray, nsamples=None, seed=None, nboots=1000, resample=True):
             dimboot2d.append(darray[dims[icoord]].size)
            # bootcoords.append( (dims[icoord], darray[dims[icoord]] ))
             bootcoords.append( (dims[icoord], np.array(darray[dims[icoord]])) )
-        print("you are using an xarray dataarray")
+        #print("you are using an xarray dataarray")
 
     except:
         if nsamples is None:
@@ -83,7 +83,7 @@ def bootgen(darray, nsamples=None, seed=None, nboots=1000, resample=True):
             dimboot.append(darray.shape[icoord])
             dimboot2d.append(darray.shape[icoord])
 
-        print("you are using a numpy array")
+        #print("you are using a numpy array")
 
     ### generate random number for bootstrapping
     if (seed):
@@ -204,3 +204,26 @@ def boot_corcoefs(a1, a2, nboots=1000):
     rvals = xr.corr(bootdat1, bootdat2, dim='model')
 
     return rvals
+
+
+def bootdif2means(dat1, dat2, nboots=1000):
+    """Obtain the significance of the difference between two means using bootstrapping """
+    dat1boot = bootgen(dat1, nboots=nboots)
+    dat2boot = bootgen(dat2, nboots=nboots)
+
+    dat1bootm = dat1boot.mean('isample')
+    dat2bootm = dat2boot.mean('isample')
+
+    diff = dat2bootm - dat1bootm
+    diffmin = diff.quantile(0.025, dim='iboot')
+    diffmax = diff.quantile(0.975, dim='iboot')
+
+    dimsignif = diffmin.dims
+    coordsignif = diffmin.coords
+
+    signif = diffmin*0+1
+    signif = signif.where( (diffmin < 0) & (diffmax > 0), nan)
+
+    return signif
+
+
