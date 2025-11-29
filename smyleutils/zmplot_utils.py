@@ -30,7 +30,7 @@ def plotlatlogpre_to10(fig, daata, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x
 
     return ax
 
-def plotlatlogpre_to1(fig, data, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=0.9, y1=0.1, y2=0.9, ylabel=True, fsize=11, yticklabels=True, cmap='blue2red', signifdat=None):
+def plotlatlogpre_to1(fig, data, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=0.9, y1=0.1, y2=0.9, ylabel=True, fsize=11, yticklabels=True, cmap='blue2red', signifdat=None, stipplesignif=False):
     """
     Plot a pressure versus latitude contour plot up to 0.01hPa.
     """
@@ -59,7 +59,12 @@ def plotlatlogpre_to1(fig, data, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=
     if (signifdat is not None):
         #print(signifdat)
         #print(lat)
-        ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='lightgray')
+        if (stipplesignif):
+            density=4
+            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+                         hatches=[density*'.',density*'.',density*'.'])
+        else:
+            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='lightgray')
 
 
     ax.contour(lat,-1.*np.log10(pre), data, levels=clevs[ np.abs(clevs) > ci/2], colors='black', linewidths=0.5)
@@ -78,7 +83,7 @@ def plotlatlogpre_to1(fig, data, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=
 
 
 
-def plotlatlogpre_nh_1000_10(fig, dat, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=0.9, y1=0.1, y2=0.9, ylabel=True, cmap='blue2red', yticklabel=True, speclevs=None):
+def plotlatlogpre_nh_1000_10(fig, dat, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=0.9, y1=0.1, y2=0.9, ylabel=True, cmap='blue2red', yticklabel=True, speclevs=None, signifdat=None, stipplesignif=False):
 
     if (speclevs is None):
         nlevs = (cmax - cmin)/ci + 1
@@ -120,6 +125,16 @@ def plotlatlogpre_nh_1000_10(fig, dat, lat, pre, ci, cmin, cmax, titlestr, x1=0.
     ax.set_title(titlestr, fontsize=16)
     ax.set_xlabel('Latitude $^{\circ}$N')
     ax.set_xlim(0,90)
+
+    if ( signifdat is not None ):
+        if (stipplesignif):
+            density=3
+            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+                   hatches=[density*'.',density*'.', density*','])
+        else:
+            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='lightgray',
+                   transform=ccrs.PlateCarree())
+
 
     return ax
 

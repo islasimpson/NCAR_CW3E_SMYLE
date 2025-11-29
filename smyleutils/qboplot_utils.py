@@ -7,7 +7,7 @@ from smyleutils import colormap_utils as mycolors
 
 def plot_lev_time(fig, data, time, pre, ci, cmin, cmax, titlestr, x1=None, x2=None, y1=None, y2=None,
     xlim=None, ylim=None, plevvar='ilev', contourlines=False, contourlinescale=1, xlabel='Time (days)',
-    signifdat=None, stipplesignif=False, ylabel=True):
+    signifdat=None, stipplesignif=False, ylabel=True, fsize=14):
     """ 
     Plot a pressure versus latitude time series in log-pressure coordinates
     """
@@ -21,7 +21,7 @@ def plot_lev_time(fig, data, time, pre, ci, cmin, cmax, titlestr, x1=None, x2=No
     clevs = np.arange(cmin, cmax+ci, ci)
     mymap = mycolors.blue2red_cmap(nlevs)
 
-    plt.rcParams['font.size'] = '12'
+    #plt.rcParams['font.size'] = '16'
 
     if (x1):
         ax = fig.add_axes([x1, y1, x2-x1, y2-y1])
@@ -32,11 +32,11 @@ def plot_lev_time(fig, data, time, pre, ci, cmin, cmax, titlestr, x1=None, x2=No
     ax.set_ylim(-np.log10(1000.),-np.log10(1))
     ax.set_yticks([-np.log10(1000),-np.log10(300),-np.log10(100),-np.log10(30),
                   -np.log10(10),-np.log10(3),-np.log10(1)])
-    ax.set_yticklabels(['1000','300','100','30','10','3','1'])
+    ax.set_yticklabels(['1000','300','100','30','10','3','1'], fontsize=fsize)
     if (ylabel):
-        ax.set_ylabel('Pressure (hPa)')
-    ax.set_title(titlestr, fontsize=16)
-    ax.set_xlabel(xlabel)
+        ax.set_ylabel('Pressure (hPa)', fontsize=fsize)
+    ax.set_title(titlestr, fontsize=fsize+4)
+    ax.set_xlabel(xlabel, fontsize=fsize)
 
     if (signifdat is not None):
         if (stipplesignif):
