@@ -11,8 +11,8 @@ from smyleutils import bootstrap_utils as boot
 
 # Read in the data
 initmon=['11','02','09']
-basepath="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Uzm/"
-savdir="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig1/"
+basepath="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Uzm/"
+savdir="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig1_2/"
 
 # Mean squared skill score calculation
 def calcmsss(mod,obs,dim='init_year'):

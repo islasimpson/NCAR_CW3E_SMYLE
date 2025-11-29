@@ -11,8 +11,8 @@ from smyleutils import bootstrap_utils as boot
 
 # Read in the data
 initmon=['11','02','09']
-basepath="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Tzm/"
-savdir="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig1/"
+basepath="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Tzm/"
+savdir="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig1_2/"
 
 # Mean squared skill score calculation
 def calcmsss(mod,obs,dim='init_year'):
@@ -31,8 +31,8 @@ for init in initmon:
 
     # select the first 6 months since that's what we have for the high top
     startdate = high.time.isel(time=0).values ; enddate = high.time.isel(time=high.time.size-1).values
-    high = high.sel(time=slice(startdate,enddate)).__xarray_dataarray_variable__
-    low = low.sel(time=slice(startdate,enddate)).__xarray_dataarray_variable__
+    high = high.sel(time=slice(startdate,enddate)).Tzm
+    low = low.sel(time=slice(startdate,enddate)).Tzm
     era5 = era5.sel(time=slice(startdate,enddate)).Tzm
 
     high_tr = avg.cosweightlat(high,-5,5).load()
