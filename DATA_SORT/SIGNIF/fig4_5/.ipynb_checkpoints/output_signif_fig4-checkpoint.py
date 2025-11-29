@@ -14,12 +14,12 @@ from smyleutils import bootstrap_utils as boot
 #startdate=['1970-12-01','1970-03-01','1970-10-01']
 #enddate=['1971-02-28','1970-05-31','1970-12-31']
 
-initmon=['11','02','09']
-startdate=['1970-12-01','1970-03-01','1970-10-01']
-enddate=['1971-02-28','1970-05-31','1970-12-31']
+initmon=['02','09']
+startdate=['1970-03-01','1970-10-01']
+enddate=['1970-05-31','1970-12-31']
 
-basepath="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Uzm/"
-savdir="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig4_5/"
+basepath="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Uzm/"
+savdir="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig3/"
 
 # Mean squared skill score calculation
 def calcmsss(mod,obs,dim='init_year'):

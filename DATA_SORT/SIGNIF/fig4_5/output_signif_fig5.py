@@ -7,11 +7,10 @@ import sys
 from smyleutils import averaging_utils as avg
 from smyleutils import bootstrap_utils as boot
 
-#initmon=['11','02','09']
-initmon=['02','09']
+initmon=['11','02','09']
 
-basepath="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Uzm/"
-savdir="/project/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig3/"
+basepath="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/Uzm/"
+savdir="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/SIGNIF/fig4_5/"
 
 for init in initmon:
     high = xr.open_dataset(basepath+'Uzm_BSMYLE-CW3E-L83_day_init'+init+'.nc')
