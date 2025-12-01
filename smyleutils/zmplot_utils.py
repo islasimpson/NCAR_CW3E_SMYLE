@@ -79,6 +79,11 @@ def plotlatlogpre_to1(fig, data, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=
     ax.set_title(titlestr, fontsize=fsize+2)
     ax.set_xlabel('Latitude $^{\circ}$N')
 
+    for spine in ax.spines.values():
+        spine.set_zorder(1000)
+    ax.xaxis.set_zorder(1000)
+    ax.yaxis.set_zorder(1000)
+
     return ax
 
 
