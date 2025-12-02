@@ -8,7 +8,7 @@ import sys
 import pandas as pd
 
 pathout="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/MJO_OLR/"
-basepath="/glade/campaign/cgd/cas/observations/ERA5/day_f09/OLR/"
+basepath="/glade/campaign/cgd/cas/observations/JRA3Q/day/OLR/"
 
 dat = xr.open_mfdataset(basepath+"/*.nc").__xarray_dataarray_variable__
 dat = dat.where( ~( (dat.time.dt.month == 2) & (dat.time.dt.day == 29)), drop=True)
@@ -33,4 +33,4 @@ mjofilt['init_year'] = np.arange(ystart,yend,1)
 mjofilt = mjofilt.sel(time=slice("1970-12-01","1971-02-28"))
 mjofilt = mjofilt.rename('MJO_OLR')
 
-mjofilt.to_netcdf(pathout+"MJOfilteredOLR_ERA5_init11.nc")
+mjofilt.to_netcdf(pathout+"JRA3QfilteredOLR_ERA5_init11.nc")

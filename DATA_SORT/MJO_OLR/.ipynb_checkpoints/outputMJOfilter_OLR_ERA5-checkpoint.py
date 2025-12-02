@@ -7,8 +7,8 @@ from CASutils import linfit_utils as linfit
 import sys
 import pandas as pd
 
-basepath="/project/cas/islas/python_savs/L83_paper/RAW_DATA/ERA5/TTR_accum_day/"
-pathout="/project/cas/islas/python_savs/L83_paper/DATA_SORT/MJO_OLR/"
+pathout="/glade/campaign/cgd/cas/islas/python_savs/NCAR_CW3E_SMYLE/DATA_SORT/MJO_OLR/"
+basepath="/glade/campaign/cgd/cas/observations/ERA5/day_f09/OLR/"
 
 dat = xr.open_mfdataset(basepath+"/*.nc").__xarray_dataarray_variable__
 dat = dat.where( ~( (dat.time.dt.month == 2) & (dat.time.dt.day == 29)), drop=True)
@@ -28,8 +28,9 @@ for iyear in np.arange(ystart,yend,1):
  
     mjofilt.append(filt.wkfilter(datanoms,0.15,1,5,20,100, spd=1))
 
-mjofilt = xr.concat(mjofilt, dim='year')
+mjofilt = xr.concat(mjofilt, dim='init_year')
+mjofilt['init_year'] = np.arange(ystart,yend,1)
 mjofilt = mjofilt.sel(time=slice("1970-12-01","1971-02-28"))
 mjofilt = mjofilt.rename('MJO_OLR')
 
-mjofilt.to_netcdf(pathout+"FLUT_mjo_ERA5.nc")
+mjofilt.to_netcdf(pathout+"MJOfilteredOLR_ERA5_init11.nc")
