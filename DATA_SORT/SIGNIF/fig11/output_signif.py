@@ -180,11 +180,11 @@ eastl83_ut_withenso = l83_ut_withenso.isel(init_year = uqbo.values < -1.*uqbo_st
 westl83_ut_noenso = l83_ut_noenso.isel(init_year = uqbo.values > uqbo_std.values).load()
 eastl83_ut_noenso = l83_ut_noenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
 
-westl32_ut_withenso = l83_ut_withenso.isel(init_year = uqbo.values > uqbo_std.values).load()
-eastl32_ut_withenso = l83_ut_withenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
+westl32_ut_withenso = l32_ut_withenso.isel(init_year = uqbo.values > uqbo_std.values).load()
+eastl32_ut_withenso = l32_ut_withenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
 
-westl32_ut_noenso = l83_ut_noenso.isel(init_year = uqbo.values > uqbo_std.values).load()
-eastl32_ut_noenso = l83_ut_noenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
+westl32_ut_noenso = l32_ut_noenso.isel(init_year = uqbo.values > uqbo_std.values).load()
+eastl32_ut_noenso = l32_ut_noenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
 
 
 westera5_zm_withenso = era5_zm_withenso.isel(init_year = uqbo.values > uqbo_std.values).load()
@@ -199,11 +199,11 @@ eastl83_zm_withenso = l83_zm_withenso.isel(init_year = uqbo.values < -1.*uqbo_st
 westl83_zm_noenso = l83_zm_noenso.isel(init_year = uqbo.values > uqbo_std.values).load()
 eastl83_zm_noenso = l83_zm_noenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
 
-westl32_zm_withenso = l83_zm_withenso.isel(init_year = uqbo.values > uqbo_std.values).load()
-eastl32_zm_withenso = l83_zm_withenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
+westl32_zm_withenso = l32_zm_withenso.isel(init_year = uqbo.values > uqbo_std.values).load()
+eastl32_zm_withenso = l32_zm_withenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
 
-westl32_zm_noenso = l83_zm_noenso.isel(init_year = uqbo.values > uqbo_std.values).load()
-eastl32_zm_noenso = l83_zm_noenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
+westl32_zm_noenso = l32_zm_noenso.isel(init_year = uqbo.values > uqbo_std.values).load()
+eastl32_zm_noenso = l32_zm_noenso.isel(init_year = uqbo.values < -1.*uqbo_std.values).load()
 
 signif_era5_ut_withenso = boot.bootdif2means(westera5_ut_withenso, eastera5_ut_withenso, nboots=1000)
 signif_era5_ut_withenso = signif_era5_ut_withenso.rename('signif_era5_ut_withenso')
