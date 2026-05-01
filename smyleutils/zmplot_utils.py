@@ -57,12 +57,20 @@ def plotlatlogpre_to1(fig, data, lat, pre, ci, cmin, cmax, titlestr, x1=0.1, x2=
     ax.contourf(lat,-1.*np.log10(pre), data, levels=clevs, cmap=mymap, extend='max')
 
     if (signifdat is not None):
-        #print(signifdat)
-        #print(lat)
         if (stipplesignif):
             density=4
-            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
-                         hatches=[density*'.',density*'.',density*'.'])
+            hatch = ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+                       hatches=[density*'.',density*'.', density*'.'], rasterized=True, zorder=1)
+            for coll in hatch.collections:
+                coll.set_edgecolor("black")
+                coll.set_linewidth(0.0)
+                coll.set_rasterized(True)
+
+# 
+#            density=4
+#            ax.set_rasterization_zorder(1)
+#            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+#                         hatches=[density*'.',density*'.',density*'.'], rasterized=True)
         else:
             ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='lightgray')
 
@@ -133,9 +141,17 @@ def plotlatlogpre_nh_1000_10(fig, dat, lat, pre, ci, cmin, cmax, titlestr, x1=0.
 
     if ( signifdat is not None ):
         if (stipplesignif):
-            density=3
-            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
-                   hatches=[density*'.',density*'.', density*','])
+            density=4
+            hatch = ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+                       hatches=[density*'.',density*'.', density*'.'], rasterized=True, zorder=1)
+            for coll in hatch.collections:
+                coll.set_edgecolor("black")
+                coll.set_linewidth(0.0)
+                coll.set_rasterized(True)
+
+#            density=3
+#            ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='none',
+#                   hatches=[density*'.',density*'.', density*','])
         else:
             ax.contourf(lat, -1.*np.log10(pre), signifdat, levels=[0,0.5,1], colors='lightgray',
                    transform=ccrs.PlateCarree())

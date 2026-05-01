@@ -15,7 +15,7 @@ from cartopy.feature import ShapelyFeature
 import cartopy.io.shapereader as shpreader
 
 def contourmap_bothoceans_tropics_fill_pos(fig, dat, lon, lat, ci, cmin, cmax, titlestr,
- x1, x2, y1, y2, labels=True, cmap="blue2red", fontsize=15, contourlines=False):
+ x1, x2, y1, y2, labels=True, cmap="blue2red", fontsize=15, contourlines=False, signifdat=None, stipplesignif=False, ylabel=True):
     """ plot a contour map of 2D data dat with coordinates lon and lat
         Input:
               fig = the figure identifier
@@ -64,6 +64,29 @@ def contourmap_bothoceans_tropics_fill_pos(fig, dat, lon, lat, ci, cmin, cmax, t
     dat, lon = add_cyclic_point(dat, coord=lon)
     ax.contourf(lon, lat, dat, levels=clevs, cmap = mymap, extend="max",
             transform=ccrs.PlateCarree())
+
+    if ( signifdat is not None ):
+        lonsignif = signifdat.lon
+        signifdat, lonsignif = add_cyclic_point(signifdat, coord=lonsignif)
+        if (stipplesignif):
+            density=3
+            hatch = ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='none',
+               hatches=[density*'.',density*'.', density*','],
+               transform = ccrs.PlateCarree(), rasterized=True, zorder=1)
+            for coll in hatch.collections:
+                coll.set_edgecolor("black")
+                coll.set_linewidth(0.0)
+                coll.set_rasterized(True)
+ 
+
+#            density=3
+#            ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='none',
+#                        hatches=[density*'.', density*'.', density*','],
+#                        transform=ccrs.PlateCarree())
+        else:
+            ax.contourf(lon, lat, signifdat, levels=[0,0.5,1], colors='lightgray',
+                        transform=ccrs.PlateCarree())
+
 
     if (contourlines):
         clevs2 = clevs[ np.abs(clevs) > ci/2 ]
@@ -131,9 +154,13 @@ def contourmap_bothoceans_robinson_pos(fig, dat, lon, lat, ci, cmin, cmax, title
         signifdat, lonsignif = add_cyclic_point( signifdat, coord=lonsignif)
         if (stipplesignif):
             density=3
-            ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='none',
+            hatch = ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='none',
                hatches=[density*'.',density*'.', density*','],
-               transform = ccrs.PlateCarree())
+               transform = ccrs.PlateCarree(), rasterized=True, zorder=1)
+            for coll in hatch.collections:
+                coll.set_edgecolor("black")
+                coll.set_linewidth(0.0)
+                coll.set_rasterized(True)
         else:
             ax.contourf(lonsignif, lat, signifdat, levels=[0,0.5,1], colors='lightgray',
                transform = ccrs.PlateCarree())
